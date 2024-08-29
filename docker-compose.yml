@@ -1,0 +1,19 @@
+services:
+  db:
+    image: mariadb:10.9
+    environment:
+      MARIADB_ROOT_PASSWORD: password
+    volumes:
+      - db-data:/var/lib/mysql
+  api:
+    build: .
+    depends_on:
+      - db
+    stdin_open: true
+    tty: true
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/api
+volumes:
+  db-data:
